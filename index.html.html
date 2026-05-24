@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="km">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ប្រព័ន្ធស្រង់វត្តមានសិស្ស</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Battambang:wght@400;700&family=Moul&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#ec4899', 
+                        primaryHover: '#db2777', 
+                        secondary: '#fce7f3', 
+                    },
+                    fontFamily: {
+                        'battambang': ['Battambang', 'sans-serif'],
+                        'moul': ['Moul', 'cursive'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Battambang', sans-serif;
+            background: linear-gradient(135deg, #fdf2f8 0%, #fce7f3 100%);
+        }
+        .status-radio:checked + div {
+            background-color: #fce7f3; 
+            border-color: #ec4899; 
+        }
+        .logo-container {
+            width: 80px;
+            height: 80px;
+            background: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 6px -1px rgba(236, 72, 153, 0.2);
+            margin: -50px auto 20px auto; 
+            border: 4px solid #fdf2f8;
+        }
+        .loading-active {
+            overflow: hidden;
+        }
+    </style>
+</head>
+<body class="flex items-center justify-center min-h-screen p-4 sm:p-6 loading-active">
+
+    <div id="welcomeSplash" class="fixed inset-0 bg-gradient-to-br from-[#fdf2f8] to-[#fce7f3] z-50 flex flex-col items-center justify-center transition-all duration-700 ease-in-out">
+        <div class="text-center animate-fade-in px-4">
+            <div class="w-24 h-24 bg-white rounded-full flex items-center justify-center shadow-xl p-3 border-4 border-pink-200 animate-bounce mx-auto mb-4">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR3EnXYxzblXfhPOX3YCqOBnwf_nvrAGGzqaA&s" alt="Logo" class="w-16 h-16 object-contain">
+            </div>
+            <h2 class="text-2xl font-bold text-primary font-moul tracking-wide mb-2 drop-shadow-sm">FOOD TECHNOLOGY</h2>
+            <p class="text-gray-500 text-sm mb-6">Department of Food Chemical</p>
+            <div class="relative w-10 h-10 mx-auto">
+                <div class="w-10 h-10 border-4 border-pink-100 rounded-full"></div>
+                <div class="w-10 h-10 border-4 border-t-primary rounded-full animate-spin absolute top-0 left-0"></div>
+            </div>
+            <span class="text-xs text-gray-400 mt-3 block tracking-widest font-medium">កំពុងដំណើរការប្រព័ន្ធ...</span>
+        </div>
+    </div>
+
+    <div class="w-full max-w-md bg-white rounded-[2rem] shadow-2xl p-8 pt-12 relative mt-10">
+        <div class="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+            <div class="logo-container">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR3EnXYxzblXfhPOX3YCqOBnwf_nvrAGGzqaA&s" alt="Logo" class="w-12 h-12 object-contain filter drop-shadow-sm">
+            </div>
+        </div>
+
+        <div class="text-center mb-8 mt-2">
+            <h1 class="text-2xl font-bold text-primary font-moul tracking-wide mb-2 drop-shadow-sm">ប្រព័ន្ធស្រង់វត្តមាន</h1>
+            <p class="text-gray-500 text-sm">សូមស្វាគមន៍មកកាន់ថ្នាក់រៀន</p>
+            <div id="timeStatus" class="mt-3 text-xs font-bold px-3 py-1.5 inline-block rounded-full bg-gray-100 text-gray-500">
+                កំពុងពិនិត្យមើលម៉ោង...
+            </div>
+        </div>
+
+        <form id="attendanceForm" class="space-y-5">
+            <div class="relative">
+                <label for="className" class="block text-sm font-bold text-gray-700 mb-1.5 ml-1">ថ្នាក់រៀន <span class="text-primary">*</span></label>
+                <div class="relative">
+                    <select id="className" name="className" required 
+                        class="w-full px-4 py-3 pl-10 border-2 border-pink-100 rounded-xl bg-pink-50/30 focus:ring-0 focus:border-primary focus:bg-white outline-none transition-all duration-300 cursor-pointer appearance-none text-gray-700 font-medium">
+                        <option value="" disabled selected>--- ជ្រើសរើសថ្នាក់ ---</option>
+                        <option value="Experimental methodology">Experimental methodology</option>
+                        <option value="ថ្នាក់ផ្សេងទៀត១">ថ្នាក់ផ្សេងទៀត១</option>
+                        <option value="ថ្នាក់ផ្សេងទៀត២">ថ្នាក់ផ្សេងទៀត២</option>
+                    </select>
+                    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                        <svg class="w-5 h-5 text-primary opacity-70" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m3-4h1m-1 4h1m-5 8h8"></path></svg>
+                    </div>
+                    <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+                        <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                    </div>
+                </div>
+            </div>
+
+            <div class="relative">
+                <label for="studentName" class="block text-sm font-bold text-gray-700 mb-1.5 ml-1">ឈ្មោះសិស្ស <span class="text-primary">*</span></label>
+                <div class="relative">
+                    <select id="studentName" name="studentName" required 
+                        class="w-full px-4 py-3 pl-10 border-2 border-pink-100 rounded-xl bg-pink-50/30 focus:ring-0 focus:border-primary focus:bg-white outline-none transition-all duration-300 cursor-pointer appearance-none text-gray-700 font-medium">
+                        <option value="" disabled selected>--- ជ្រើសរើសឈ្មោះសិស្ស ---</option>
+                        <option value="សាលីណា">សាលីណា</option>
+                        <option value="ឡាយ ហេង">ឡាយ ហេង</option>
+                        <option value="សុវណ្ហម៉ានិត">សុវណ្ហម៉ានិត</option>
+                        <option value="ណារី">ណារី</option>
+                        <option value="រក្សា">រក្សា</option>
+                        <option value="យូអ៊ី">យូអ៊ី</option>
+                        <option value="ស្រីភា">ស្រីភា</option>
+                        <option value="នេសា">នេសា</option>
+                        <option value="ចាន់ណា">ចាន់ណា</option>
+                        <option value="រ៉ានីន">រ៉ានីន</option>
+                        <option value="សុផាន់">សុផាន់</option>
+                        <option value="សុធារ៉ា">សុធារ៉ា</option>
+                        <option value="នីសា">នីសា</option>
+                        <option value="សោភ័ណ្ឌ">សោភ័ណ្ឌ</option>
+                        <option value="ចន្នី">ចន្នី</option>
+                        <option value="សុខនាង">សុខនាង</option>
+                    </select>
+                    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                        <svg class="w-5 h-5 text-primary opacity-70" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg>
+                    </div>
+                    <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+                        <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                    </div>
+                </div>
+            </div>
+
+            <div>
+                <label class="block text-sm font-bold text-gray-700 mb-2.5 ml-1">ស្ថានភាព <span class="text-primary">*</span></label>
+                <div class="grid grid-cols-3 gap-3">
+                    <label class="relative cursor-pointer group">
+                        <input type="radio" name="status" value="✅ វត្តមាន" required class="status-radio peer sr-only">
+                        <div class="flex flex-col items-center justify-center p-3 border-2 border-gray-100 rounded-xl transition-all duration-200 group-hover:border-pink-200 group-hover:bg-pink-50">
+                            <span class="text-xl mb-1 filter drop-shadow-sm peer-checked:scale-110 transition-transform">✅</span>
+                            <span class="text-sm font-medium text-gray-600 peer-checked:text-primary">វត្តមាន</span>
+                        </div>
+                    </label>
+
+                    <label class="relative cursor-pointer group">
+                        <input type="radio" name="status" value="📒 ច្បាប់" class="status-radio peer sr-only">
+                        <div class="flex flex-col items-center justify-center p-3 border-2 border-gray-100 rounded-xl transition-all duration-200 group-hover:border-pink-200 group-hover:bg-pink-50">
+                            <span class="text-xl mb-1 filter drop-shadow-sm peer-checked:scale-110 transition-transform">📒</span>
+                            <span class="text-sm font-medium text-gray-600 peer-checked:text-primary">ច្បាប់</span>
+                        </div>
+                    </label>
+
+                    <label class="relative cursor-pointer group">
+                        <input type="radio" name="status" value="❌ អវត្តមាន" class="status-radio peer sr-only">
+                        <div class="flex flex-col items-center justify-center p-3 border-2 border-gray-100 rounded-xl transition-all duration-200 group-hover:border-pink-200 group-hover:bg-pink-50">
+                            <span class="text-xl mb-1 filter drop-shadow-sm peer-checked:scale-110 transition-transform">❌</span>
+                            <span class="text-sm font-medium text-gray-600 peer-checked:text-primary">អវត្តមាន</span>
+                        </div>
+                    </label>
+                </div>
+            </div>
+
+            <button type="submit" id="submitBtn" 
+                class="w-full mt-8 bg-gradient-to-r from-primary to-pink-400 hover:from-primaryHover hover:to-primary text-white font-bold py-3.5 px-4 rounded-xl shadow-lg shadow-pink-500/30 transition-all duration-300 transform hover:-translate-y-0.5 flex justify-center items-center group overflow-hidden relative">
+                <span id="btnText" class="relative z-10 flex items-center">
+                    បញ្ជូនទិន្នន័យ
+                    <svg class="w-5 h-5 ml-2 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+                </span>
+                <svg id="loadingIcon" class="hidden relative z-10 animate-spin ml-2 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                    <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                </svg>
+            </button>
+        </form>
+
+        <div id="alertMsg" class="hidden mt-5 p-3.5 rounded-xl text-sm text-center font-medium shadow-sm transition-all duration-300"></div>
+    </div>
+
+    <script>
+        const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyj_q0htRc4dLfNRCsDOWinLhI0PV1ijYnXefLJupB3U6s4Kye4BShSSyBvxUv6VzpV/exec'; 
+
+        const form = document.getElementById('attendanceForm');
+        const submitBtn = document.getElementById('submitBtn');
+        const btnText = document.getElementById('btnText');
+        const loadingIcon = document.getElementById('loadingIcon');
+        const alertMsg = document.getElementById('alertMsg');
+        const timeStatus = document.getElementById('timeStatus');
+
+        // ⏱️ កំណត់ម៉ោង៖ ចាប់ផ្តើម និង បញ្ចប់ (ម៉ោងលោតជា ២៤ម៉ោង)
+        const START_HOUR = 7;  // 7:00 ព្រឹក
+        const END_HOUR = 17;  // 5:00 ល្ងាច
+
+        // មុខងារពិនិត្យមើលម៉ោងកំណត់
+        function checkTimeLimit() {
+            const now = new Date();
+            const currentHour = now.getHours();
+            
+            // បង្ហាញម៉ោង និងនាទីបច្ចុប្បន្នលើអេក្រង់
+            const formattedTime = now.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+
+            if (currentHour >= START_HOUR && currentHour < END_HOUR) {
+                // ស្ថិតក្នុងម៉ោងអនុញ្ញាត
+                timeStatus.innerHTML = `🟢 បើកស្រង់វត្តមាន (ម៉ោងបច្ចុប្បន្ន៖ ${formattedTime})`;
+                timeStatus.className = "mt-3 text-xs font-bold px-3 py-1.5 inline-block rounded-full bg-green-100 text-green-600";
+                return true;
+            } else {
+                // ហួសម៉ោងកំណត់
+                timeStatus.innerHTML = `🔴 បិទប្រព័ន្ធ (អនុញ្ញាតម៉ោង 07:00 ព្រឹក - 05:00 ល្ងាច)`;
+                timeStatus.className = "mt-3 text-xs font-bold px-3 py-1.5 inline-block rounded-full bg-red-100 text-red-600";
+                
+                // ចាក់សោរទម្រង់បែបបទ
+                submitBtn.disabled = true;
+                submitBtn.classList.add('opacity-50', 'cursor-not-allowed', 'hover:from-primary');
+                btnText.innerHTML = 'ហួសម៉ោងបំពេញវត្តមាន';
+                
+                // មិនអនុញ្ញាតឱ្យចុច Select ផ្សេងៗ
+                document.getElementById('className').disabled = true;
+                document.getElementById('studentName').disabled = true;
+                document.querySelectorAll('input[name="status"]').forEach(radio => radio.disabled = true);
+                
+                return false;
+            }
+        }
+
+        window.addEventListener('load', function() {
+            const welcomeSplash = document.getElementById('welcomeSplash');
+            
+            // ដំណើរការពិនិត្យម៉ោងពេលបើក Page ភ្លាម
+            checkTimeLimit();
+            
+            setTimeout(() => {
+                welcomeSplash.classList.add('opacity-0', 'pointer-events-none');
+                document.body.classList.remove('loading-active'); 
+                setTimeout(() => {
+                    welcomeSplash.remove();
+                }, 700);
+            }, 1200);
+        });
+
+        form.addEventListener('submit', function(e) {
+            e.preventDefault(); 
+
+            // ពិនិត្យម៉ោងម្តងទៀតពេលចុច Submit ដើម្បីការពារសិស្សទុក Page ចោលយូររហូតហួសម៉ោង
+            if (!checkTimeLimit()) {
+                showAlert('❌ បរាជ័យ៖ ប្រព័ន្ធត្រូវបានបិទ ព្រោះហួសម៉ោងកំណត់!', 'error');
+                return;
+            }
+
+            submitBtn.disabled = true;
+            submitBtn.classList.add('opacity-80', 'cursor-not-allowed', 'scale-[0.98]');
+            btnText.innerHTML = 'កំពុងបញ្ជូន...';
+            loadingIcon.classList.remove('hidden');
+            alertMsg.classList.add('hidden');
+
+            const formData = new FormData(form);
+            
+            fetch(GOOGLE_SCRIPT_URL, {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => {
+                if (response.ok) {
+                    showAlert('✅ បញ្ជូនទិន្នន័យជោគជ័យ!', 'success');
+                    document.getElementById('studentName').selectedIndex = 0;
+                    const checkedRadio = document.querySelector('input[name="status"]:checked');
+                    if (checkedRadio) checkedRadio.checked = false;
+                } else {
+                    showAlert('❌ បរាជ័យក្នុងការបញ្ជូនទៅកាន់ Sheets!', 'error');
+                }
+            })
+            .catch(error => {
+                showAlert('⚠️ មានបញ្ហាភ្ជាប់បណ្តាញ! សូមព្យាយាមម្តងទៀត។', 'error');
+                console.error('Error:', error);
+            })
+            .finally(() => {
+                // ប្រសិនបើនៅតែស្ថិតក្នុងម៉ោងអនុញ្ញាត ទើបបើកប៊ូតុងឱ្យដើរវិញ
+                if (checkTimeLimit()) {
+                    submitBtn.disabled = false;
+                    submitBtn.classList.remove('opacity-80', 'cursor-not-allowed', 'scale-[0.98]');
+                    btnText.innerHTML = 'បញ្ជូនទិន្នន័យ <svg class="w-5 h-5 ml-2 inline-block transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>';
+                }
+                loadingIcon.classList.add('hidden');
+            });
+        });
+
+        function showAlert(text, type) {
+            alertMsg.innerHTML = text;
+            alertMsg.className = 'mt-5 p-3.5 rounded-xl text-sm text-center font-bold shadow-sm transition-all duration-300 animate-bounce';
+            if (type === 'success') {
+                alertMsg.classList.add('bg-pink-100', 'text-pink-600', 'border', 'border-pink-200');
+            } else {
+                alertMsg.classList.add('bg-red-50', 'text-red-500', 'border', 'border-red-100');
+            }
+        }
+    </script>
+</body>
+</html>
